@@ -3,25 +3,51 @@ body, html{
 }
 body{
   margin: 0px;
-  background-color:#444;
-  font-size: 18px;
+  background-color:#FFFFFF;
+  font-family: 'Optima',Arial,'Sans Serif';
+  font-size: 19px;
+  font-weight: 100;
 }
 body, a:link, a:visited, a:active{
-  color: lightblue;
+  color: white;
 }
-.title, .addDancerButton{
-  padding:5px 12px;
+.title, .addDancerButton, .lineUp, .generate{
+  padding:12px 12px;
   float:right;
+  display:inline-block;
+  text-decoration: none;
+}
+.signature{
+  padding:12px 18px;
+  float:left;
+  display:inline-block;
+  font-weight:900;
+  position:relative;
+  height:22px;
+  background-color: #444;
+  text-decoration: none;
 }
 .topbar{
-  height:32px;
-  background-color: #555;
+  height:46px;
+  background-color: #000000;
 }
 .title{
-  background-color: #777;
+  background-color: #444;
 }
 .dancer{
-  border:10px solid red;
-  border-radius:10px;
+  background-color: rgba(222,222,222,0);
+  border-width: 1px;
+  border-style: solid; 
+  border-color: rgba(10,10,10,1);
+  width: 0;
+  -moz-border-radius: 75px;
+  -webkit-border-radius: 75px;
   position:absolute;
+}
+
+.square{
+  width: 0px;
+  height: 20px;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
 }
