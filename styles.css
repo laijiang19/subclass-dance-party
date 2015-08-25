@@ -11,6 +11,12 @@ body{
 body, a:link, a:visited, a:active{
   color: white;
 }
+canvas{
+  position:absolute;
+  margin: 50px;
+  height:100%;
+  width:100%;
+}
 .title, .addDancerButton, .lineUp, .generate{
   padding:12px 12px;
   float:right;

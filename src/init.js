@@ -1,3 +1,22 @@
+
+var interact = function(array){
+  var arr = array;
+  var count = 1;
+  var aX, aY, bX, bY, line, distance;
+  while (count < array.length){
+    aX = parseFloat(arr[count-1].$node.css('top'));
+    aY = parseFloat(arr[count-1].$node.css('left'));
+    bX = parseFloat(arr[count].$node.css('top'));
+    bY = parseFloat(arr[count].$node.css('left'));
+    distance = Math.sqrt(Math.pow(aX-bX, 2) + Math.pow(aY-bY, 2));
+    console.log(distance);
+    if (distance < 120){
+      
+    }
+    count++; 
+  }
+};
+
 $(document).ready(function(){
   window.dancers = [];
 
@@ -28,18 +47,26 @@ $(document).ready(function(){
       Math.random() * 1000
     );
     window.dancers.push(dancer);
+    sortDancer();
     $('body').append(dancer.$node);
   });
   
   var timer;
 
+  //function to generate a series of dance objects for easier visual effect
   $(".generate").on("click", function(event){
+
+    //cleans window.dancers array each function click event
+    window.dancers = [];
+
+    //setup init for calling random constructor methods
     var index;
     var blink = window['BlinkyDancer'];
     var rotate = window['RotatingDancer'];
     var jump = window['JumpingDancer'];
     var Con = [blink, rotate, jump];
-    var dancer;
+    var dancer, dHeight, dWidth;
+
     var cb = function(){
       index = Math.floor(Math.random()*3);
       dancer = new Con[index](
@@ -48,30 +75,50 @@ $(document).ready(function(){
         Math.random() * 1000
       );
       window.dancers.push(dancer);
+      window.dancers = window.dancers.sort(function(a,b){
+        var aX = a.$node.css('top');
+        var bX = b.$node.css('top');
+        var aY = a.$node.css('left');
+        var bY = a.$node.css('left');
+        return Math.pow(aX,2) + Math.pow(aY,2) - Math.pow(bX,2) + Math.pow(bY,2);
+      });
+      interact(window.dancers);
       $('body').append(dancer.$node);
     };
-    timer = setInterval(cb,10);
+
+    //set a timer so it calls each time rather than all at once
+    timer = setInterval(cb,150);
   });
 
+  //line up on click
   $(".lineUp").on("click", function(event){
+    
     var left = 20;
     var top = $('body').height()/2;
     var width = $('body').width();
     var length = window.dancers.length;
     var dancerHeight; 
     var r,g,b;
+
+    //clear the setInterval event called by generate()
     clearInterval(timer);
+
     _.each(window.dancers, function(dancer){
+
+      //call Dancer class method lineUp() which stops the setTimeout call
       dancer.lineUp();
+
+      //set random colors and change color when lining up; in addition they will all fit on the same line 
       dancerHeight = dancer.$node.css('height');
-      console.log(dancerHeight);
       r = Math.floor(Math.random()*256);
       g = Math.floor(Math.random()*256);
       b = 160;
+
       dancer.$node.animate({
         top: top,
         left: left,
       });
+
       dancer.$node.css({
         borderTopColor: "rgb("+r+","+g+","+b+")",
         borderLeftColor: "rgb("+r+","+g+","+b+")",
@@ -86,4 +133,6 @@ $(document).ready(function(){
     });
   });
 });
+
+
 
