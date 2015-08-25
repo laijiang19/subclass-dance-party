@@ -7,7 +7,6 @@ describe("blinkyDancer", function() {
   beforeEach(function() {
     clock = sinon.useFakeTimers();
     blinkyDancer = new BlinkyDancer(10, 20, timeBetweenSteps);
-    console.log(blinkyDancer);
   });
 
   it("should inherit from Dance class", function(){
@@ -28,11 +27,11 @@ describe("blinkyDancer", function() {
   describe("dance", function(){
     it("should call step at least once per second", function(){
       sinon.spy(blinkyDancer, "step");
-      console.log(blinkyDancer);
       
       expect(blinkyDancer.step.callCount).to.be.equal(0);
 
       clock.tick(timeBetweenSteps); 
+      clock.tick(timeBetweenSteps);
       expect(blinkyDancer.step.callCount).to.be.equal(1);
 
       clock.tick(timeBetweenSteps);
