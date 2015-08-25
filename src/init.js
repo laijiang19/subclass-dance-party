@@ -1,20 +1,8 @@
 
-var interact = function(array){
-  var arr = array;
-  var count = 1;
-  var aX, aY, bX, bY, line, distance;
-  while (count < array.length){
-    aX = parseFloat(arr[count-1].$node.css('top'));
-    aY = parseFloat(arr[count-1].$node.css('left'));
-    bX = parseFloat(arr[count].$node.css('top'));
-    bY = parseFloat(arr[count].$node.css('left'));
-    distance = Math.sqrt(Math.pow(aX-bX, 2) + Math.pow(aY-bY, 2));
-    console.log(distance);
-    if (distance < 120){
-      
-    }
-    count++; 
-  }
+var interact = function(array, callback){
+  _.each(array, function(item){
+    callback(item);
+  });
 };
 
 $(document).ready(function(){
@@ -47,7 +35,38 @@ $(document).ready(function(){
       Math.random() * 1000
     );
     window.dancers.push(dancer);
-    sortDancer();
+
+    // aX = parseFloat(dancer.$node.css('top'));
+    // aY = parseFloat(dancer.$node.css('left'));
+
+    // var bag = [];
+
+    // $('.proximity').removeClass('proximity');
+
+    // bag = _.filter(window.dancers, function(item){
+    //   bX = parseFloat(item.$node.css('top'));
+    //   bY = parseFloat(item.$node.css('left'));
+    //   return Math.sqrt(Math.pow(aX - bX, 2) + Math.pow(aY - bY, 2)) <= 5;
+    // });
+
+    // window.dancers.push(dancer);
+
+    // r = Math.floor(Math.random()*256);
+    // g = Math.floor(Math.random()*256);
+    // b = Math.floor(Math.random()*256);
+
+    // $('.proximity').css({
+    //   borderTopColor: "rgb("+r+","+g+","+b+")",
+    //   borderLeftColor: "rgb("+r+","+g+","+b+")",
+    //   borderRightColor: "rgb("+r+","+g+","+b+")",
+    //   borderBottomColor: "rgb("+r+","+g+","+b+")"        
+    // });
+
+    interact(bag, function(item){
+      console.log(item);
+      item.$node.addClass('proximity');
+    });
+
     $('body').append(dancer.$node);
   });
   
@@ -66,7 +85,11 @@ $(document).ready(function(){
     var jump = window['JumpingDancer'];
     var Con = [blink, rotate, jump];
     var dancer, dHeight, dWidth;
+    var aX, aY, bX, bY, bag;
+    var r, g, b;
+    
 
+    // callback function being invoked by setInterval()
     var cb = function(){
       index = Math.floor(Math.random()*3);
       dancer = new Con[index](
@@ -74,20 +97,40 @@ $(document).ready(function(){
         $("body").width() * Math.random(),
         Math.random() * 1000
       );
-      window.dancers.push(dancer);
-      window.dancers = window.dancers.sort(function(a,b){
-        var aX = a.$node.css('top');
-        var bX = b.$node.css('top');
-        var aY = a.$node.css('left');
-        var bY = a.$node.css('left');
-        return Math.pow(aX,2) + Math.pow(aY,2) - Math.pow(bX,2) + Math.pow(bY,2);
+
+      aX = parseFloat(dancer.$node.css('top'));
+      aY = parseFloat(dancer.$node.css('left'));
+
+      // $('.proximity').removeClass('proximity');
+
+      bag = _.filter(window.dancers, function(item){
+        bX = parseFloat(item.$node.css('top'));
+        bY = parseFloat(item.$node.css('left'));
+        return Math.sqrt(Math.pow(aX - bX, 2) + Math.pow(aY - bY, 2)) <= 5;
       });
-      interact(window.dancers);
+
+      window.dancers.push(dancer);
+
+      r = Math.floor(Math.random()*256);
+      g = Math.floor(Math.random()*256);
+      b = Math.floor(Math.random()*256);
+
+      $('.proximity').css({
+        borderTopColor: "rgb("+r+","+g+","+b+")",
+        borderLeftColor: "rgb("+r+","+g+","+b+")",
+        borderRightColor: "rgb("+r+","+g+","+b+")",
+        borderBottomColor: "rgb("+r+","+g+","+b+")"        
+      });
+
+      interact(bag, function(item){
+        item.$node.addClass('proximity');
+      });
+
       $('body').append(dancer.$node);
     };
 
     //set a timer so it calls each time rather than all at once
-    timer = setInterval(cb,150);
+    timer = setInterval(cb, 30);
   });
 
   //line up on click
@@ -126,11 +169,14 @@ $(document).ready(function(){
         borderBottomColor: "rgb("+r+","+g+","+b+")"
       });
       left += width/length;
-      // if (left > $('body').width() + 20){
-      //   top -= 50;
-      //   left = 20;
-      // }
     });
+  });
+
+  $(".dancer").on("hover", function(event){
+    $(this).addClass('move');
+    $('.move')
+  }, function(){
+    $(this).removeClass('move');
   });
 });
 

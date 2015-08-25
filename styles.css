@@ -33,13 +33,16 @@ canvas{
   background-color: #444;
   text-decoration: none;
 }
+
 .topbar{
   height:46px;
   background-color: #000000;
 }
+
 .title{
   background-color: #444;
 }
+
 .dancer{
   background-color: rgba(222,222,222,0);
   border-width: 1px;
@@ -56,4 +59,8 @@ canvas{
   height: 20px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
+}
+
+.proximity{
+  border-color: pink;
 }
