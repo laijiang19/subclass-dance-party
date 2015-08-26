@@ -52,15 +52,16 @@ canvas{
   -moz-border-radius: 75px;
   -webkit-border-radius: 75px;
   position:absolute;
+  /*margin: 10px;*/
 }
 
-.square{
+/*.square{
   width: 0px;
   height: 20px;
   -moz-border-radius: 0px;
   -webkit-border-radius: 0px;
-}
+}*/
 
-.proximity{
-  border-color: pink;
-}
+/*.dancer:hover{
+  margin-top: 200px;
+}*/

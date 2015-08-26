@@ -26,7 +26,6 @@ $(document).ready(function(){
 
     // get the maker function for the kind of dancer we're supposed to make
     var dancerMakerFunction = window[dancerMakerFunctionName];
-    console.log(dancerMakerFunctionName);
 
     // make a dancer with a random position
     var dancer = new dancerMakerFunction(
@@ -62,10 +61,9 @@ $(document).ready(function(){
     //   borderBottomColor: "rgb("+r+","+g+","+b+")"        
     // });
 
-    interact(bag, function(item){
-      console.log(item);
-      item.$node.addClass('proximity');
-    });
+    // interact(bag, function(item){
+    //   item.$node.addClass('proximity');
+    // });
 
     $('body').append(dancer.$node);
   });
@@ -73,10 +71,10 @@ $(document).ready(function(){
   var timer;
 
   //function to generate a series of dance objects for easier visual effect
-  $(".generate").on("click", function(event){
+  $(".forest").on("click", function(event){
 
     //cleans window.dancers array each function click event
-    window.dancers = [];
+    // window.dancers = [];
 
     //setup init for calling random constructor methods
     var index;
@@ -92,6 +90,66 @@ $(document).ready(function(){
     // callback function being invoked by setInterval()
     var cb = function(){
       index = Math.floor(Math.random()*3);
+      dancer = new Con[index](
+        $("body").height() * Math.random(),
+        $("body").width() * Math.random(),
+        Math.random() * 1000
+      );
+
+      aX = parseFloat(dancer.$node.css('top'));
+      aY = parseFloat(dancer.$node.css('left'));
+
+      // $('.proximity').removeClass('proximity');
+
+      bag = _.filter(window.dancers, function(item){
+        bX = parseFloat(item.$node.css('top'));
+        bY = parseFloat(item.$node.css('left'));
+        return Math.sqrt(Math.pow(aX - bX, 2) + Math.pow(aY - bY, 2)) <= 5;
+      });
+
+      window.dancers.push(dancer);
+
+      r = Math.floor(Math.random()*256);
+      g = Math.floor(Math.random()*256);
+      b = Math.floor(Math.random()*256);
+
+      $('.proximity').css({
+        borderTopColor: "rgb("+r+","+g+","+b+")",
+        borderLeftColor: "rgb("+r+","+g+","+b+")",
+        borderRightColor: "rgb("+r+","+g+","+b+")",
+        borderBottomColor: "rgb("+r+","+g+","+b+")"        
+      });
+
+      interact(bag, function(item){
+        item.$node.addClass('proximity');
+      });
+
+      $('body').append(dancer.$node);
+    };
+
+    //set a timer so it calls each time rather than all at once
+    timer = setInterval(cb, 30);
+  });
+
+  //function to generate a series of dance objects for easier visual effect
+  $(".icicle").on("click", function(event){
+
+    //cleans window.dancers array each function click event
+    // window.dancers = [];
+
+    //setup init for calling random constructor methods
+    var index;
+    var blink = window['BlinkyDancer'];
+    var jump = window['JumpingDancer'];
+    var Con = [blink, jump];
+    var dancer, dHeight, dWidth;
+    var aX, aY, bX, bY, bag;
+    var r, g, b;
+    
+
+    // callback function being invoked by setInterval()
+    var cb = function(){
+      index = Math.floor(Math.random()*2);
       dancer = new Con[index](
         $("body").height() * Math.random(),
         $("body").width() * Math.random(),
@@ -172,12 +230,22 @@ $(document).ready(function(){
     });
   });
 
-  $(".dancer").on("hover", function(event){
-    $(this).addClass('move');
-    $('.move')
-  }, function(){
-    $(this).removeClass('move');
+  $("body").on("mouseenter", ".dancer",function(event){
+    var cTop = parseFloat($(this).css('top'));
+    var cLeft = parseFloat($(this).css('left'));
+    console.log($('body').height());
+    $(this).animate({
+      top: $('body').height()/2 - 100
+    });    
   });
+
+  $("body").on("mouseleave", ".dancer",function(event){
+    var cTop = parseFloat($(this).css('top'));
+    var cLeft = parseFloat($(this).css('left'));
+    $(this).animate({
+      top: $('body').height()/2
+    });    
+  });  
 });
 
 

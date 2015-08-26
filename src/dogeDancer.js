@@ -1,8 +1,8 @@
-var RotatingDancer = function(top, left, timeBetweenSteps){
+var DogeDancer = function(top, left, timeBetweenSteps){
   Dancer.call(this, top, left, timeBetweenSteps*2);
 
   this.$node.animate({
-    height: Math.random()*70+50
+    height: Math.random()*70+20
   });
   this.degree = undefined; 
 };
