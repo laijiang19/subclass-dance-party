@@ -13,7 +13,7 @@ body, a:link, a:visited, a:active{
   color: white;
 }
 
-.title, .addDancerButton, .lineUp, .generate{
+.title, .addDancerButton, .lineUp, .generate, .music{
   padding:12px 12px;
   float:right;
   display:inline-block;

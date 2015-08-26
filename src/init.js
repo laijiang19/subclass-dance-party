@@ -230,7 +230,7 @@ $(document).ready(function(){
       );
       $('body').append(dancer.$node);
       setTimeout(function(){
-        $('.dogeDancer').hide('slow').delay(500).queue(function(){
+        $('.dogeDancer').hide('slow').delay(2000).queue(function(){
           $('.dogeDancer').remove();
         });
       }, 600);
