@@ -1,5 +1,5 @@
 var RotatingDancer = function(top, left, timeBetweenSteps){
-  Dancer.call(this, top, left, timeBetweenSteps*2);
+  LineDancer.call(this, top, left, timeBetweenSteps*2);
 
   this.$node.animate({
     height: Math.random()*70+50
@@ -7,11 +7,11 @@ var RotatingDancer = function(top, left, timeBetweenSteps){
   this.degree = undefined; 
 };
 
-RotatingDancer.prototype = Object.create(Dancer.prototype);
+RotatingDancer.prototype = Object.create(LineDancer.prototype);
 RotatingDancer.prototype.constructor = RotatingDancer;
 RotatingDancer.prototype.step = function(){
 
-  Dancer.prototype.step.call(this);
+  LineDancer.prototype.step.call(this);
   this.degree = Math.random() * 180;
   this.$node.css({
     '-webkit-transform': 'rotate(' + this.degree + 'deg)',

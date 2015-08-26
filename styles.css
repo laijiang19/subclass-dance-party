@@ -3,20 +3,16 @@ body, html{
 }
 body{
   margin: 0px;
-  background-color:#FFFFFF;
+  background-color: rgb(20,20,20);
   font-family: 'Optima',Arial,'Sans Serif';
   font-size: 19px;
   font-weight: 100;
 }
+
 body, a:link, a:visited, a:active{
   color: white;
 }
-canvas{
-  position:absolute;
-  margin: 50px;
-  height:100%;
-  width:100%;
-}
+
 .title, .addDancerButton, .lineUp, .generate{
   padding:12px 12px;
   float:right;
@@ -44,16 +40,19 @@ canvas{
 }
 
 .dancer{
-  background-color: rgba(222,222,222,0);
+/*  background-color: rgba(222,222,222,0);*/
   border-width: 1px;
   border-style: solid; 
-  border-color: rgba(10,10,10,1);
-  width: 0;
+  border-color: rgba(222,222,222,1);
   -moz-border-radius: 75px;
   -webkit-border-radius: 75px;
   position:absolute;
   /*margin: 10px;*/
 }
+
+/*.promixity{
+  border-color: pink;
+}*/
 
 /*.square{
   width: 0px;

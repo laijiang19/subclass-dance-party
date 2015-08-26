@@ -74,14 +74,14 @@ $(document).ready(function(){
   $(".forest").on("click", function(event){
 
     //cleans window.dancers array each function click event
-    // window.dancers = [];
+    //window.dancers = [];
 
     //setup init for calling random constructor methods
     var index;
     var blink = window['BlinkyDancer'];
     var rotate = window['RotatingDancer'];
     var jump = window['JumpingDancer'];
-    var Con = [blink, rotate, jump];
+    var Con = [blink, rotate, rotate, jump];
     var dancer, dHeight, dWidth;
     var aX, aY, bX, bY, bag;
     var r, g, b;
@@ -89,7 +89,7 @@ $(document).ready(function(){
 
     // callback function being invoked by setInterval()
     var cb = function(){
-      index = Math.floor(Math.random()*3);
+      index = Math.floor(Math.random()*4);
       dancer = new Con[index](
         $("body").height() * Math.random(),
         $("body").width() * Math.random(),
@@ -128,7 +128,14 @@ $(document).ready(function(){
     };
 
     //set a timer so it calls each time rather than all at once
-    timer = setInterval(cb, 30);
+    var timesRun = 0;
+    timer = setInterval(function(){
+      timesRun += 1;
+      if(timesRun === 400){
+        clearInterval(timer);
+      }
+      cb();
+    }, 50);
   });
 
   //function to generate a series of dance objects for easier visual effect
@@ -159,7 +166,8 @@ $(document).ready(function(){
       aX = parseFloat(dancer.$node.css('top'));
       aY = parseFloat(dancer.$node.css('left'));
 
-      // $('.proximity').removeClass('proximity');
+      // setTimeout(function(){
+      //   $('.proximity').removeClass('proximity');}, 50);
 
       bag = _.filter(window.dancers, function(item){
         bX = parseFloat(item.$node.css('top'));
@@ -188,14 +196,62 @@ $(document).ready(function(){
     };
 
     //set a timer so it calls each time rather than all at once
-    timer = setInterval(cb, 30);
+    var timesRun = 0;
+    timer = setInterval(function(){
+      timesRun += 1;
+      if(timesRun === 250){
+        clearInterval(timer);
+      }
+      cb();
+    }, 50);
+  });
+
+  //
+  $(".doge").on("click", function(event){
+
+    //cleans window.dancers array each function click event
+    // window.dancers = [];
+
+    //setup init for calling random constructor methods
+    var index;
+    var blink = window['BlinkyDancer'];
+    var rotate = window['RotatingDancer'];
+    var jump = window['JumpingDancer'];
+    var Con = [blink, rotate, jump];
+    var dancer, timer;
+    
+    // callback function being invoked by setInterval()
+    var cb = function(){
+      index = Math.floor(Math.random()*3);
+      dancer = new DogeDancer(
+        $("body").height() * Math.random(),
+        $("body").width() * Math.random(),
+        Math.random() * 1000
+      );
+      $('body').append(dancer.$node);
+      setTimeout(function(){
+        $('.dogeDancer').hide('slow').delay(500).queue(function(){
+          $('.dogeDancer').remove();
+        });
+      }, 600);
+      window.dancers.push(dancer);
+    };
+
+    var timesRun = 0;
+    timer = setInterval(function(){
+      timesRun += 1;
+      if(timesRun === 100){
+        clearInterval(timer);
+      }
+      cb();
+    }, 200);
   });
 
   //line up on click
   $(".lineUp").on("click", function(event){
     
     var left = 20;
-    var top = $('body').height()/2;
+    var top = $('body').height()/2 - 50;
     var width = $('body').width();
     var length = window.dancers.length;
     var dancerHeight; 
@@ -218,6 +274,9 @@ $(document).ready(function(){
       dancer.$node.animate({
         top: top,
         left: left,
+        webkitTransition: "top 1s, left 1s",
+        transition: "top 1s, left 1s",
+        width: 0
       });
 
       dancer.$node.css({
@@ -233,9 +292,8 @@ $(document).ready(function(){
   $("body").on("mouseenter", ".dancer",function(event){
     var cTop = parseFloat($(this).css('top'));
     var cLeft = parseFloat($(this).css('left'));
-    console.log($('body').height());
     $(this).animate({
-      top: $('body').height()/2 - 100
+      top: $('body').height()/2 - 150
     });    
   });
 
@@ -243,7 +301,7 @@ $(document).ready(function(){
     var cTop = parseFloat($(this).css('top'));
     var cLeft = parseFloat($(this).css('left'));
     $(this).animate({
-      top: $('body').height()/2
+      top: $('body').height()/2 - 50
     });    
   });  
 });
